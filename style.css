@@ -596,3 +596,260 @@ h2 {
     backdrop-filter: blur(4px);
     color: #333;
 }
+
+/* =========================================
+   Responsive Design & 2K Baseline Optimization
+   ========================================= */
+
+/* 1. 2K Baseline (Desktop First) */
+body {
+    max-width: 2560px;
+    margin: 0 auto;
+    position: relative;
+    /* 确保背景色在宽屏下也能铺满视口外部（可选，取决于是否需要两侧留白，这里暂按居中处理） */
+    background-color: var(--bg-color); 
+}
+
+/* 2. Tablet / Small Laptop (< 1200px) */
+@media (max-width: 1200px) {
+    /* 保持横屏逻辑，按比例缩放 */
+    
+    .hero-title {
+        font-size: clamp(3rem, 10vw, 8rem); /* 稍微调小 */
+    }
+
+    .gallery-layout {
+        width: 95%;
+        gap: 40px; /* 减小间距 */
+    }
+    
+    .visual-gallery {
+        flex: 1; /* 调整比例 */
+    }
+    
+    .narrative-aside {
+        flex: 1;
+    }
+
+    .gallery-title {
+        font-size: 2.5rem;
+    }
+    
+    .step-marker {
+        font-size: 2rem;
+    }
+    
+    /* System Scene 阶梯位置微调 */
+    .step-1 { left: 8%; bottom: 30%; }
+    .step-2 { left: 35%; bottom: 42%; }
+    .step-3 { left: 65%; bottom: 58%; }
+    .step-4 { right: 2%; bottom: 10%; }
+}
+
+/* 3. Mobile Portrait (< 768px) */
+@media (max-width: 768px) {
+    /* --- 全局布局重构 --- */
+    .scene {
+        min-height: auto; /* 允许高度自适应 */
+        padding: 4rem 0; /* 增加上下内边距 */
+        display: block; /* 解除 flex center 强制居中，允许内容自然流式布局 */
+    }
+
+    /* System Scene 特殊处理：保持高度以容纳动画，但适配内容 */
+    .system-scene, .hero-scene, .beesnap-scene, .scene-resonance {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* --- Hero Scene 适配 --- */
+    .hero-title {
+        font-size: clamp(2.5rem, 15vw, 4rem);
+        line-height: 1.1;
+        text-align: center;
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    .orbit-item {
+        font-size: 0.8rem;
+    }
+    
+    /* 调整标签位置，避免飞出屏幕 */
+    .hero-scene .orbit-item.top { top: 10%; }
+    .hero-scene .orbit-item.bottom { bottom: 10%; }
+    .hero-scene .orbit-item.left { left: 5%; }
+    .hero-scene .orbit-item.right { right: 5%; }
+    
+    /* --- Reality Scene 适配 --- */
+    .narrative-body {
+        width: 92vw;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    
+    .narrative-body p {
+        font-size: 1.1rem;
+        text-align: left;
+    }
+
+    /* --- System Scene (阶梯) 适配 --- */
+    /* 手机端改为垂直堆叠，不再强制跟随 SVG 路径的绝对定位 */
+    .system-scene .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        padding-top: 2rem;
+        height: auto; /* 解除固定高度 */
+        min-height: 100vh;
+    }
+    
+    .stairs-container {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        padding: 0 1rem;
+        height: auto;
+    }
+
+    .step-item {
+        position: relative; /* 解除 absolute */
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        transform: none !important; /* JS 动画会覆盖 transform，这里只是 CSS 布局基础 */
+        width: 100%;
+        max-width: 100%;
+        opacity: 1; /* JS 会控制，但防止 CSS 隐藏导致无法调试 */
+        margin-bottom: 2rem;
+    }
+    
+    .life-path-svg {
+        display: none; /* 手机端 SVG 路径可能无法完美匹配垂直堆叠，暂时隐藏或换成垂直线 */
+    }
+    
+    /* --- Beesnap Scene 适配 --- */
+    .beesnap-scene {
+        height: auto; /* Allow natural height */
+        min-height: 100vh;
+    }
+
+    .beesnap-phase {
+        position: relative; /* Stack vertically */
+        width: 100%;
+        height: auto;
+        opacity: 1; /* JS will handle, but default to visible for layout */
+        visibility: visible;
+        padding: 4rem 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content-row {
+        flex-direction: column; /* 图片在上，文字在下 (HTML顺序: Visual -> Text) */
+        padding: 0 1rem;
+        gap: 2rem;
+        max-width: 100%;
+    }
+    
+    .text-part, .visual-part {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .text-part.centered {
+        width: 100%;
+    }
+    
+    .visual-part {
+        height: 300px; /* 减小高度 */
+    }
+    
+    .mockup-v1 {
+        transform: scale(0.8);
+    }
+
+    /* --- Resonance Scene (画廊) 适配 --- */
+    .scene-resonance {
+        height: auto;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .res-layer {
+        position: relative; /* Stack vertically */
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+        padding: 4rem 0;
+    }
+
+    .layer-1, .layer-2, .layer-3 {
+        display: block; /* Ensure block display */
+    }
+
+    .gallery-layout {
+        flex-direction: column;
+        width: 92vw;
+        height: auto;
+        gap: 2rem;
+        padding-bottom: 4rem;
+    }
+    
+    .visual-gallery {
+        width: 100%;
+        height: auto; /* Let it grow */
+        overflow: visible;
+        flex: none;
+    }
+
+    .wireframe-scroll-container {
+        gap: 4rem;
+        transform: none !important; /* Disable JS transform if any remains */
+    }
+    
+    .narrative-aside {
+        width: 100%;
+        text-align: left;
+        padding: 0 1rem;
+    }
+    
+    .gallery-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    
+    .reality-grid {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .glass-card, .reality-item {
+        border-width: 0.5px;
+    }
+
+    .wireframe-box {
+        width: 90vw;
+        height: 160vw; /* 保持比例 */
+        max-width: 320px;
+        max-height: 580px;
+        border-width: 0.5px; /* 极简呼吸感：减细边框 */
+    }
+    
+    .big-date-bg {
+        font-size: 20vw; /* 缩小背景字 */
+        top: 10%;
+    }
+
+    /* Convergence Section */
+    .final-text p {
+        font-size: 1.5rem;
+    }
+    
+    .final-text .highlight {
+        font-size: 1.8rem;
+    }
+}
