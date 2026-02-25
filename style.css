@@ -650,17 +650,26 @@ body {
 @media (max-width: 768px) {
     /* --- 全局布局重构 --- */
     .scene {
-        min-height: auto; /* 允许高度自适应 */
-        padding: 4rem 0; /* 增加上下内边距 */
-        display: block; /* 解除 flex center 强制居中，允许内容自然流式布局 */
+        height: auto !important;
+        min-height: 100vh;
+        padding: 4rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        position: relative !important;
+        z-index: auto !important;
+        margin-bottom: 4rem;
     }
 
     /* System Scene 特殊处理：保持高度以容纳动画，但适配内容 */
     .system-scene, .hero-scene, .beesnap-scene, .scene-resonance {
+        height: auto !important;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
+        position: relative !important;
+        z-index: auto !important;
     }
 
     /* --- Hero Scene 适配 --- */
@@ -674,6 +683,28 @@ body {
 
     .orbit-item {
         font-size: 0.8rem;
+    }
+
+    .hero-orbit {
+        position: relative !important;
+        inset: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+        height: auto !important;
+        z-index: auto !important;
+    }
+
+    .hero-scene .orbit-item {
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        z-index: auto !important;
     }
     
     /* 调整标签位置，避免飞出屏幕 */
@@ -700,8 +731,10 @@ body {
         display: flex;
         flex-direction: column;
         padding-top: 2rem;
-        height: auto; /* 解除固定高度 */
+        height: auto !important;
         min-height: 100vh;
+        position: relative !important;
+        z-index: auto !important;
     }
     
     .stairs-container {
@@ -709,7 +742,9 @@ body {
         flex-direction: column;
         gap: 3rem;
         padding: 0 1rem;
-        height: auto;
+        height: auto !important;
+        position: relative !important;
+        z-index: auto !important;
     }
 
     .step-item {
@@ -723,6 +758,7 @@ body {
         max-width: 100%;
         opacity: 1; /* JS 会控制，但防止 CSS 隐藏导致无法调试 */
         margin-bottom: 2rem;
+        z-index: auto !important;
     }
     
     .life-path-svg {
@@ -731,19 +767,31 @@ body {
     
     /* --- Beesnap Scene 适配 --- */
     .beesnap-scene {
-        height: auto; /* Allow natural height */
+        height: auto !important;
         min-height: 100vh;
+        position: relative !important;
+        z-index: auto !important;
+    }
+
+    .beesnap-container,
+    .beesnap-stage {
+        position: relative !important;
+        height: auto !important;
+        min-height: 100vh;
+        z-index: auto !important;
     }
 
     .beesnap-phase {
         position: relative; /* Stack vertically */
         width: 100%;
-        height: auto;
+        height: auto !important;
         opacity: 1; /* JS will handle, but default to visible for layout */
         visibility: visible;
         padding: 4rem 0;
         display: flex;
         flex-direction: column;
+        z-index: auto !important;
+        margin-bottom: 3rem;
     }
 
     .content-row {
@@ -756,6 +804,8 @@ body {
     .text-part, .visual-part {
         width: 100%;
         max-width: 100%;
+        position: relative !important;
+        z-index: auto !important;
     }
     
     .text-part.centered {
@@ -763,7 +813,7 @@ body {
     }
     
     .visual-part {
-        height: 300px; /* 减小高度 */
+        height: auto !important;
     }
     
     .mockup-v1 {
@@ -772,18 +822,29 @@ body {
 
     /* --- Resonance Scene (画廊) 适配 --- */
     .scene-resonance {
-        height: auto;
+        height: auto !important;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        position: relative !important;
+        z-index: auto !important;
+    }
+
+    .resonance-viewport {
+        position: relative !important;
+        height: auto !important;
+        min-height: 100vh;
+        width: 100%;
     }
 
     .res-layer {
         position: relative; /* Stack vertically */
-        height: auto;
+        height: auto !important;
         opacity: 1;
         visibility: visible;
         padding: 4rem 0;
+        z-index: auto !important;
+        margin-bottom: 3rem;
     }
 
     .layer-1, .layer-2, .layer-3 {
@@ -793,27 +854,35 @@ body {
     .gallery-layout {
         flex-direction: column;
         width: 92vw;
-        height: auto;
+        height: auto !important;
         gap: 2rem;
         padding-bottom: 4rem;
+        position: relative !important;
+        z-index: auto !important;
     }
     
     .visual-gallery {
         width: 100%;
-        height: auto; /* Let it grow */
+        height: auto !important;
         overflow: visible;
         flex: none;
+        position: relative !important;
+        z-index: auto !important;
     }
 
     .wireframe-scroll-container {
         gap: 4rem;
         transform: none !important; /* Disable JS transform if any remains */
+        position: relative !important;
+        z-index: auto !important;
     }
     
     .narrative-aside {
         width: 100%;
         text-align: left;
         padding: 0 1rem;
+        position: relative !important;
+        z-index: auto !important;
     }
     
     .gallery-title {
