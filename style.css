@@ -646,279 +646,254 @@ body {
     .step-4 { right: 2%; bottom: 10%; }
 }
 
-/* 3. Mobile Portrait (< 768px) */
+/* 3. Mobile Portrait (< 768px) - 纯静态流式排版重构 */
 @media (max-width: 768px) {
-    /* --- 全局布局重构 --- */
-    .scene {
-        height: auto !important;
-        min-height: 100vh;
-        padding: 4rem 0;
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
-        position: relative !important;
-        z-index: auto !important;
-        margin-bottom: 4rem;
+    /* --- 全局重置 (Global Reset) --- */
+    /* 强制解除所有 GSAP 动画控制 */
+    * {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important; /* 禁用位移/缩放 */
+        pointer-events: auto !important;
     }
 
-    /* System Scene 特殊处理：保持高度以容纳动画，但适配内容 */
-    .system-scene, .hero-scene, .beesnap-scene, .scene-resonance {
+    /* 场景容器通用样式 */
+    .scene, 
+    .hero-scene, 
+    .reality-scene,
+    .system-scene, 
+    .beesnap-scene, 
+    .scene-resonance {
         height: auto !important;
-        min-height: 100vh;
+        min-height: auto !important; /* 不再强制满屏，自然高度 */
+        padding: 60px 0 !important;   /* 统一上下间距 */
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        gap: 40px;
         position: relative !important;
-        z-index: auto !important;
+        overflow: visible !important;
+        margin: 0 !important;
+        background-attachment: scroll !important; /* 防止背景固定导致的性能问题 */
     }
 
-    /* --- Hero Scene 适配 --- */
+    /* 内容容器宽度锁定 */
+    .content-wrapper,
+    .beesnap-container,
+    .beesnap-stage,
+    .resonance-viewport,
+    .narrative-body,
+    .gallery-layout {
+        width: 92% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        position: relative !important;
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        left: auto !important;
+        top: auto !important;
+    }
+
+    /* --- Hero Scene --- */
     .hero-title {
-        font-size: clamp(2.5rem, 15vw, 4rem);
+        font-size: clamp(3rem, 12vw, 4.5rem);
         line-height: 1.1;
         text-align: center;
-        width: 100%;
-        padding: 0 1rem;
-    }
-
-    .orbit-item {
-        font-size: 0.8rem;
+        margin-bottom: 20px;
+        position: relative !important;
+        transform: none !important;
     }
 
     .hero-orbit {
         position: relative !important;
-        inset: auto;
+        inset: auto !important;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.75rem;
-        margin-top: 1.5rem;
+        gap: 12px;
         height: auto !important;
-        z-index: auto !important;
+        margin-top: 20px;
     }
 
-    .hero-scene .orbit-item {
+    .orbit-item {
         position: relative !important;
-        left: auto !important;
-        right: auto !important;
-        top: auto !important;
-        bottom: auto !important;
+        left: auto !important; top: auto !important;
+        right: auto !important; bottom: auto !important;
         transform: none !important;
-        z-index: auto !important;
+        font-size: 1rem;
+        color: var(--text-secondary);
+        opacity: 0.8 !important;
     }
-    
-    /* 调整标签位置，避免飞出屏幕 */
-    .hero-scene .orbit-item.top { top: 10%; }
-    .hero-scene .orbit-item.bottom { bottom: 10%; }
-    .hero-scene .orbit-item.left { left: 5%; }
-    .hero-scene .orbit-item.right { right: 5%; }
-    
-    /* --- Reality Scene 适配 --- */
-    .narrative-body {
-        width: 92vw;
-        margin: 0 auto;
-        padding: 0 1rem;
-    }
-    
+
+    /* --- Reality Scene --- */
     .narrative-body p {
         font-size: 1.1rem;
+        line-height: 1.6;
         text-align: left;
+        color: #333;
+        margin-bottom: 20px;
     }
 
-    /* --- System Scene (阶梯) 适配 --- */
-    /* 手机端改为垂直堆叠，不再强制跟随 SVG 路径的绝对定位 */
+    /* --- System Scene (System Builder) --- */
     .system-scene .content-wrapper {
-        display: flex;
-        flex-direction: column;
-        padding-top: 2rem;
-        height: auto !important;
-        min-height: 100vh;
-        position: relative !important;
-        z-index: auto !important;
+        gap: 40px; /* 增加步骤间距 */
     }
-    
+
     .stairs-container {
+        position: relative !important;
+        height: auto !important;
         display: flex;
         flex-direction: column;
-        gap: 3rem;
-        padding: 0 1rem;
-        height: auto !important;
-        position: relative !important;
-        z-index: auto !important;
+        gap: 50px; /* 步骤垂直间距 */
+    }
+
+    .life-path-svg {
+        display: none !important; /* 隐藏线条 */
     }
 
     .step-item {
-        position: relative; /* 解除 absolute */
-        left: auto !important;
-        right: auto !important;
-        top: auto !important;
-        bottom: auto !important;
-        transform: none !important; /* JS 动画会覆盖 transform，这里只是 CSS 布局基础 */
+        position: relative !important;
+        left: auto !important; top: auto !important;
+        bottom: auto !important; right: auto !important;
+        transform: none !important;
         width: 100%;
         max-width: 100%;
-        opacity: 1; /* JS 会控制，但防止 CSS 隐藏导致无法调试 */
-        margin-bottom: 2rem;
-        z-index: auto !important;
-    }
-    
-    .life-path-svg {
-        display: none; /* 手机端 SVG 路径可能无法完美匹配垂直堆叠，暂时隐藏或换成垂直线 */
-    }
-    
-    /* --- Beesnap Scene 适配 --- */
-    .beesnap-scene {
-        height: auto !important;
-        min-height: 100vh;
-        position: relative !important;
-        z-index: auto !important;
+        margin: 0;
+        padding-left: 20px;
+        border-left: 2px solid #eee; /* 添加左侧线条作为视觉引导 */
     }
 
-    .beesnap-container,
-    .beesnap-stage {
+    .step-marker {
         position: relative !important;
-        height: auto !important;
-        min-height: 100vh;
-        z-index: auto !important;
+        top: auto !important; left: auto !important;
+        font-size: 2rem;
+        margin-bottom: 10px;
+        opacity: 0.3 !important;
+        display: block;
     }
 
+    /* --- Beesnap Scene --- */
     .beesnap-phase {
-        position: relative; /* Stack vertically */
+        position: relative !important;
         width: 100%;
         height: auto !important;
-        opacity: 1; /* JS will handle, but default to visible for layout */
-        visibility: visible;
-        padding: 4rem 0;
+        padding: 0 !important;
+        margin-bottom: 60px; /* 阶段间距 */
         display: flex;
         flex-direction: column;
-        z-index: auto !important;
-        margin-bottom: 3rem;
+        gap: 30px;
+        opacity: 1 !important;
+        visibility: visible !important;
     }
 
     .content-row {
-        flex-direction: column; /* 图片在上，文字在下 (HTML顺序: Visual -> Text) */
-        padding: 0 1rem;
-        gap: 2rem;
-        max-width: 100%;
+        flex-direction: column;
+        padding: 0 !important;
+        gap: 30px;
     }
-    
+
     .text-part, .visual-part {
-        width: 100%;
-        max-width: 100%;
-        position: relative !important;
-        z-index: auto !important;
-    }
-    
-    .text-part.centered {
-        width: 100%;
+        width: 100% !important;
+        height: auto !important;
     }
     
     .visual-part {
-        height: auto !important;
-    }
-    
-    .mockup-v1 {
-        transform: scale(0.8);
-    }
-
-    /* --- Resonance Scene (画廊) 适配 --- */
-    .scene-resonance {
-        height: auto !important;
-        min-height: 100vh;
+        order: -1; /* 图片在上方 */
         display: flex;
-        flex-direction: column;
-        position: relative !important;
-        z-index: auto !important;
+        justify-content: center;
+        margin-bottom: 20px;
     }
 
-    .resonance-viewport {
-        position: relative !important;
-        height: auto !important;
-        min-height: 100vh;
-        width: 100%;
-    }
-
-    .res-layer {
-        position: relative; /* Stack vertically */
-        height: auto !important;
-        opacity: 1;
-        visibility: visible;
-        padding: 4rem 0;
-        z-index: auto !important;
-        margin-bottom: 3rem;
-    }
-
-    .layer-1, .layer-2, .layer-3 {
-        display: block; /* Ensure block display */
-    }
-
-    .gallery-layout {
-        flex-direction: column;
-        width: 92vw;
-        height: auto !important;
-        gap: 2rem;
-        padding-bottom: 4rem;
-        position: relative !important;
-        z-index: auto !important;
+    .mockup-v1 {
+        transform: scale(0.9) !important; /*稍微缩小适配屏幕 */
+        margin: 0 auto;
     }
     
-    .visual-gallery {
-        width: 100%;
-        height: auto !important;
-        overflow: visible;
-        flex: none;
+    .glass-card {
+        background: rgba(255, 255, 255, 0.8); /* 增加不透明度 */
+        box-shadow: none; /* 简化阴影 */
+        border: 1px solid #eee; /* 简化边框 */
+    }
+
+    /* Act 2 Grid */
+    .reality-grid {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .reality-item {
+        background: #fff;
+        border: 1px solid #eee;
+    }
+
+    /* --- Resonance Scene (Gallery) --- */
+    .res-layer {
         position: relative !important;
-        z-index: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        margin-bottom: 80px; /* 层级间距加大 */
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+    
+    .layer-1, .layer-2, .layer-3 {
+        display: block !important;
+    }
+
+    .big-date-bg {
+        position: relative !important;
+        font-size: 15vw;
+        opacity: 0.1 !important;
+        margin-bottom: -40px;
+        z-index: 0;
+    }
+
+    .content-box {
+        position: relative !important;
+        z-index: 1;
     }
 
     .wireframe-scroll-container {
-        gap: 4rem;
-        transform: none !important; /* Disable JS transform if any remains */
-        position: relative !important;
-        z-index: auto !important;
-    }
-    
-    .narrative-aside {
-        width: 100%;
-        text-align: left;
-        padding: 0 1rem;
-        position: relative !important;
-        z-index: auto !important;
-    }
-    
-    .gallery-title {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-    
-    .reality-grid {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .glass-card, .reality-item {
-        border-width: 0.5px;
+        gap: 40px;
+        margin-bottom: 40px;
     }
 
     .wireframe-box {
-        width: 90vw;
-        height: 160vw; /* 保持比例 */
-        max-width: 320px;
-        max-height: 580px;
-        border-width: 0.5px; /* 极简呼吸感：减细边框 */
+        width: 100%;
+        height: auto;
+        aspect-ratio: 320/580; /* 保持比例 */
+        max-width: 100%;
+        margin: 0 auto;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
     
-    .big-date-bg {
-        font-size: 20vw; /* 缩小背景字 */
-        top: 10%;
+    .narrative-aside {
+        padding-top: 20px;
+    }
+    
+    .story-scroll {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .story-item {
+        margin: 0 !important;
+        opacity: 1 !important;
     }
 
-    /* Convergence Section */
+    /* Convergence */
     .final-text p {
         font-size: 1.5rem;
+        text-align: left;
     }
     
     .final-text .highlight {
         font-size: 1.8rem;
+        display: block;
+        margin-top: 1.5rem;
     }
 }
