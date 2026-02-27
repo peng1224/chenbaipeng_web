@@ -77,31 +77,9 @@ function initHeroGsap() {
       .to(blob, { scale: 0.3, opacity: 0 }, 0);
     },
 
-    // Mobile: Simplified Animation
+    // Mobile: Disabled Animation (Static Layout)
     "(max-width: 768px)": function() {
-      // A. Simple Intro
-      gsap.set(title, { scale: 0.9, opacity: 0 });
-      gsap.to(title, { scale: 1, opacity: 1, duration: 1, ease: 'power2.out' });
-      
-      orbitItems.forEach((item, i) => {
-        gsap.fromTo(item, 
-          { opacity: 0, y: 20 }, 
-          { opacity: 1, y: 0, delay: 0.2 + (i * 0.05) }
-        );
-      });
-
-      // B. Simple Exit
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: '.hero-scene',
-          start: 'top top',
-          end: '+=50%', // Shorter scroll distance
-          scrub: 1
-        }
-      })
-      .to(title, { opacity: 0, y: -30, filter: 'blur(5px)' }, 0)
-      .to(orbitItems, { opacity: 0, scale: 0.8 }, 0)
-      .to(blob, { opacity: 0 }, 0);
+      // Intentionally left empty to allow CSS static layout
     }
   });
 }
@@ -211,22 +189,9 @@ function initRealityGsap() {
         }, 3.5);
     },
 
-    // Mobile: Simple Fade In
+    // Mobile: Disabled Animation (Static Layout)
     "(max-width: 768px)": function() {
-      // 简单的淡入，不 Pin
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: scene,
-          start: "top 60%",
-          end: "bottom 80%",
-          toggleActions: "play none none reverse"
-        }
-      });
-
-      tl.fromTo(title, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 })
-        .fromTo(orbitItems, { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, stagger: 0.1, duration: 0.8 }, "<0.2")
-        .fromTo(narrative, { opacity: 0 }, { opacity: 1, duration: 0.8 }, "-=0.4")
-        .fromTo(paras, { opacity: 0, y: 20 }, { opacity: 1, y: 0, stagger: 0.3, duration: 0.8 }, "-=0.4");
+      // Intentionally left empty to allow CSS static layout
     }
   });
 }
@@ -284,28 +249,9 @@ function initSystemGsap() {
         .to(steps[3], { opacity: 1, scale: 1, duration: 0.8 }, "drop+=0.4");
     },
 
-    // Mobile: Simplified Vertical Stack
+    // Mobile: Disabled Animation (Static Layout)
     "(max-width: 768px)": function() {
-      // 确保 SVG 隐藏 (CSS 已处理，这里双保险)
-      if (path) gsap.set(path, { autoAlpha: 0 });
-      
-      // 简单的淡入效果，不使用 Pin，允许自然滚动
-      steps.forEach((step, i) => {
-        gsap.fromTo(step, 
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1, 
-            y: 0, 
-            duration: 0.8, 
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: step,
-              start: "top 85%", // 当元素进入视口底部 15% 时触发
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-      });
+      // Intentionally left empty to allow CSS static layout
     }
   });
 }
@@ -369,26 +315,9 @@ function initBeesnapGsap() {
       tl.to({}, { duration: 1.5 });
     },
 
-    // Mobile: Natural Scroll
+    // Mobile: Disabled Animation (Static Layout)
     "(max-width: 768px)": function() {
-      const phases = gsap.utils.toArray('.beesnap-phase');
-      phases.forEach(phase => {
-        gsap.fromTo(phase, 
-          { autoAlpha: 0, y: 50 },
-          {
-            autoAlpha: 1, 
-            y: 0, 
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: phase,
-              start: "top 80%",
-              end: "bottom 20%",
-              toggleActions: "play none none reverse"
-            }
-          }
-        );
-      });
+      // Intentionally left empty to allow CSS static layout
     }
   });
 }
@@ -444,26 +373,10 @@ function initResonance() {
                   });
         },
 
-        // Mobile: Natural Vertical Scroll
-        "(max-width: 768px)": function() {
-            const layers = gsap.utils.toArray('.res-layer');
-            layers.forEach(layer => {
-                gsap.fromTo(layer, 
-                    { autoAlpha: 0, y: 30 }, 
-                    {
-                        autoAlpha: 1, 
-                        y: 0, 
-                        duration: 1, 
-                        ease: "power2.out",
-                        scrollTrigger: {
-                            trigger: layer,
-                            start: "top 80%",
-                            toggleActions: "play none none reverse"
-                        }
-                    }
-                );
-            });
-        }
+        // Mobile: Disabled Animation (Static Layout)
+    "(max-width: 768px)": function() {
+      // Intentionally left empty to allow CSS static layout
+    }
     });
 }
 

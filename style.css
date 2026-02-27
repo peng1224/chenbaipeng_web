@@ -597,6 +597,102 @@ h2 {
     color: #333;
 }
 
+/* --- Contact Info Section --- */
+.contact-info {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-secondary);
+}
+
+.contact-guide {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.contact-links {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    font-size: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.contact-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.contact-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: #333;
+    transition: width 0.3s ease;
+}
+
+.contact-link:hover {
+    color: #333;
+}
+
+.contact-link:hover::after {
+    width: 100%;
+}
+
+.separator {
+    opacity: 0.4;
+    user-select: none;
+}
+
+.contact-text {
+    cursor: default;
+    transition: color 0.3s ease;
+}
+
+.contact-text:hover {
+    color: #555;
+}
+
+/* Mobile Specific Adjustments for Contact Info */
+@media (max-width: 768px) {
+    .contact-info {
+        margin-top: 3rem;
+        align-items: flex-start; /* Left align on mobile */
+        padding-bottom: 40px;
+        width: 100%;
+    }
+    
+    .contact-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+    
+    .separator {
+        display: none;
+    }
+    
+    .contact-guide {
+        font-size: 0.8rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .contact-link, .contact-text {
+        font-size: 0.95rem;
+    }
+}
+
 /* =========================================
    Responsive Design & 2K Baseline Optimization
    ========================================= */
